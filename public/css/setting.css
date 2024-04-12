@@ -1,0 +1,129 @@
+.container-fluidd {
+    height: 142px;
+    background-color: #E0E9F8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.main{
+    padding: 30px 60px;
+}
+.main h2{
+    font-weight: 650;
+    font-size: 19px;
+    color: #2f2f30da;
+}
+
+.main form .img{
+    margin-top: 20px;
+    padding: 5px 20px;
+    border: 2px solid #6C7195;
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.main form .img .img-text{
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+.main form .img .img-text .text{
+    display: flex;
+    flex-direction: column;
+}
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    font-weight: 500;
+    font-size: 15px;
+    color: #2f2f30;
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #d2d4e3;
+    border-radius: 12px;
+    background-color:#F9F9F9 ;
+    box-sizing: border-box;
+}
+
+.upload {
+    display: flex;
+    align-items: center;
+    width: 63px;
+    height: 63px;
+    position: relative;
+    margin: auto;
+  }
+  
+  .upload img {
+    border-radius: 50%;
+    border: 2px solid #bfd0ed;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .upload .round {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 40px;
+    bottom: 0;
+    right: 0;
+    background: #9AB2DB;
+    width: 22px;
+    height: 22px;
+    line-height: 22px;
+    text-align: center;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+  
+  .upload .round input[type="file"] {
+    position: absolute;
+    transform: scale(2);
+    opacity: 0;
+  }
+  
+  input[type=file]::-webkit-file-upload-button {
+    cursor: pointer;
+  }
+
+  .alert {
+    padding: 20px;
+    width: 100%;
+    margin-bottom: 15px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    position: absolute;
+    z-index: 1111;
+  }
+  
+  .success {
+    color: #332C54;
+    background-color: #859bc7f8;
+    border-color: #EEF4FF;
+  }
+  .closebtn {
+    margin-left: 15px;
+    color: #000;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .closebtn:hover {
+    color: #000;
+  }
