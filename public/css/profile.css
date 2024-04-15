@@ -8,7 +8,7 @@ body {
 }
 .container-fluidd {
     height: 142px;
-    background-color: #E0E9F8;
+    background-color: #DDEAFF;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -24,7 +24,7 @@ body {
     background-color: #fff;
     padding: 10px;
     border-radius: 50%;
-    border: 3px solid #E0E9F8;
+    border: 3px solid #DDEAFF;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -35,7 +35,11 @@ body {
     border-radius: 50%;
 }
 
-.main{
+.navbar {
+    font-family: 'Poppins', sans-serif;
+}
+.main {
+    font-family: 'Poppins', sans-serif;
     padding: 70px;
 }
 .main h2{
@@ -47,7 +51,16 @@ body {
     font-size: 15px;
     font-weight: 400;
 }
-
+.main .name{
+    font-size: 15px;
+    font-weight: 500;
+    color: #3c3c3d;
+}
+.main .bio {
+    margin-top: -10px;
+    font-size: 13px;
+    font-weight: 400;
+}
 .main .text{
     display: flex;
     gap: 10px;
@@ -63,3 +76,154 @@ body {
     display: flex;
     gap: 10px;
 }
+.buttonn{
+    margin-top: 40px;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    font-size: 13px;
+}
+.buttonn button{
+    border: none;
+    background: transparent;
+}
+.btn-active{
+    padding: 5px 10px;
+    background-color: #D9D9D9;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+
+.album-wrapper {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.album-wrapper .new img{
+    width: 245px;
+    height: 170px;
+}
+
+.album-wrapper .folder {
+    background-image: url('../img/folder.svg');
+    width: 255px;
+    height: 170px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: end;
+}
+
+.album-wrapper a {
+    text-decoration: none;
+}
+
+.album-wrapper .folder .menu {
+    width: 100%;
+    padding: 0px 10px;
+    display: flex;
+    justify-content: space-between;
+    color: white;
+}
+
+.album-wrapper .folder .menu .kiri {
+    display: flex;
+    gap: 5px;
+}
+
+.album-wrapper .folder .menu .kiri img {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+}
+
+.album-wrapper .folder .menu .kiri p {
+    font-size: 13px;
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+.album-wrapper .folder .menu .icon span {
+    font-size: 20px;
+}
+.photo-wrapper{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+}
+
+.photo-wrapper .add{
+    border-radius: 10px;
+    width: 250px;
+    height: 180px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    text-decoration: none;
+    border: 3px dashed #A6B0D8;
+    color: black;
+}
+
+.photo-wrapper .images img{
+    border-radius: 10px;
+    border: 1px solid rgb(242, 242, 242);
+    width: 250px;
+    height: 180px;
+    object-fit: cover;
+}
+
+
+.upload {
+    width: 60px;
+    height: 60px;
+    position: relative;
+    margin: auto;
+  }
+  
+  .upload{
+    cursor: pointer;
+
+  }
+  .upload img {
+    cursor: pointer;
+    border-radius: 50%;
+    border: 2px solid #bfd0ed;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .upload .round {
+    position: absolute;
+    top: 40px;
+    bottom: 0;
+    right: 0;
+    background: #9AB2DB;
+    width: 22px;
+    height: 22px;
+    line-height: 22px;
+    text-align: center;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+  
+  .upload .round input[type="file"] {
+    position: absolute;
+    transform: scale(2);
+    opacity: 0;
+  }
+  
+  input[type=file]::-webkit-file-upload-button {
+    cursor: pointer;
+  }
+  
+  .textcover{
+    display: flex;
+    justify-content: center;
+  }

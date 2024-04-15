@@ -5,22 +5,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="css/album.css">
+
+    <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
+
     <!-- icon -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 
-<body style="background-color: #F9F9F9;padding: 0;margin: 0;">
+<body>
     <nav class="navbar navbar-expand-lg"
-        style="background-color: #F6F8FB;padding: 0px 30px;border:1px solid #ECECEC ;">
+        style="background-color: #F6F8FB;padding: 0px 30px;border:1px solid #ECECEC ; box-shadow: 0 4px 8px rgba(220, 220, 220, 0.25);">
         <div class="container-fluid">
-            <img src="img/logo_pixsphere.png" alt="Pixsphere" class="navbar-brand" width="128px">
+            <img src="{{ asset('img/logo_pixsphere.png') }}" alt="Pixsphere" class="navbar-brand" width="128px">
             <a class="navbar-brand" href="#"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
                 aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,7 +35,7 @@
                         <a class="nav-link" aria-current="page" href="/home">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="/albums">Create</a>
+                        <a class="nav-link" href="/albums">Create</a>
                     </li>
                 </ul>
                 @auth
@@ -42,8 +44,8 @@
                         aria-expanded="false" style="display: flex;align-items: center;gap: 8px;border: none;">
                         <div class="img-prof"
                             style="display:flex;width:47px;height: 47px;border-radius: 50%;padding: 4px;border: 1px solid #332C54;justify-content: center;align-items: center;">
-                            <img src="profile_images/{{ auth()->user()->photo_profil}}" alt=""
-                                style="width: 40px;height: 40px;border-radius: 50%;">
+                            <img src="{{ asset('profile_images/' . auth()->user()->photo_profil) }}" alt=""
+                                style="width: 40px; height: 40px; border-radius: 50%;">
                         </div>
                         <p style="margin-top: 14px;cursor: pointer;">{{ auth()->user()->username}}</p>
                     </button>
@@ -71,18 +73,61 @@
     </nav>
 
     <div class="container-fluidd">
-        <div class="search-container">
+        <div class="img">
+            <img src="{{ asset('profile_images/' . $user->photo_profil) }}" alt="">
         </div>
     </div>
 
-
     <div class="main">
-        <h5>Gallery</h5>
-        <p>Gallery / Folder</p>
-        <div class="wrapper">
-            <!-- tombol modal add folder -->
-            <a href="" class="new" data-bs-toggle="modal" data-bs-target="#exampleModal"><img src="img/newfolder.svg"
-                    alt=""></a>
+        <h2>{{ $user->username }}</h2>
+        <p class="name">{{ $user->name }}</p>
+        <p class="bio">{{ $user->bio }}</p>
+        <div class="text">
+            <p>80 Followers </p>
+            <p>80 Following </p>
+            <p>0 Post</p>
+        </div>
+
+        <div class="button">
+            <div class="button">
+                @if(auth()->check() && auth()->user()->id == $user->id)
+                <a href="{{ route('setting') }}" class="btn btn rounded-pill fw-semibold" type="submit"
+                    style="background-color: #F9F9F9; color: #1A1A1A; border: 2px solid #6C7195;"
+                    onmouseover="this.style.backgroundColor='#F0F3F6';"
+                    onmouseout="this.style.backgroundColor='#F9F9F9';this.style.color='#1A1A1A';">Edit Profile</a>
+                @else
+                <a href="" class="btn btn rounded-pill fw-semibold" type="submit"
+                    style="background-color: #F9F9F9; color: #1A1A1A; border: 2px solid #6C7195;"
+                    onmouseover="this.style.backgroundColor='#F0F3F6';"
+                    onmouseout="this.style.backgroundColor='#F9F9F9';this.style.color='#1A1A1A';">Follow</a>
+                @endif
+            </div>
+
+        </div>
+        <br>
+
+        <div class="buttonn">
+            <div class="btn-active"><button id="imageBtn">Image</button></div>
+            <div class=""><button id="AlbumBtn">Album</button></div>
+        </div>
+        <hr style="color: #a1a3b6;">
+
+        <div class="photo-wrapper">
+            @if(auth()->check() && auth()->user()->id == $user->id)
+            <a href="/photos-create" class="add">+</a>
+            @endif
+
+            @foreach ($photos as $img)
+            @php $photo = Storage::url('images/'.$img->photo); @endphp
+            <a href="" class="images"><img src="{{ url($photo) }}" alt=""></a>
+            @endforeach
+        </div>
+
+        <div class="album-wrapper">
+            @if(auth()->check() && auth()->user()->id == $user->id)
+            <a href="" class="new" data-bs-toggle="modal" data-bs-target="#exampleModal"><img
+                    src="{{ asset('img/newfolder.svg') }}" alt=""></a>
+            @endif
             <!-- Modal -->
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
@@ -146,7 +191,8 @@
 
 
                                 <br><br>
-                                <button type="submit" class="btn btn-primary" style="background-color:#A6B0D8;border:none">Create
+                                <button type="submit" class="btn btn-primary"
+                                    style="background-color:#A6B0D8;border:none">Create
                                     Album</button>
                             </form>
                         </div>
@@ -154,14 +200,13 @@
                 </div>
             </div>
 
-            <!-- foreach folder -->
             @foreach ($albums as $album)
             {{-- @php $path = Storage::url('images/'.$img->path); @endphp --}}
             <a href="{{ route('albums.show', $album->id) }}" class="folder">
                 <div class="menu">
                     <div class="kiri">
                         @if ($album->cover)
-                        <img src="{{ $album->cover }}" alt="">
+                        <img src="{{ asset($album->cover) }}" alt="">
                         @else
                         <img src="https://id-test-11.slatic.net/shop/186f07608a71497c6c35d88ef68a2b3b.jpeg"
                             alt="Default Image">
@@ -173,33 +218,37 @@
             @endforeach
         </div>
 
-        <p class="text-img">Gallery / Image</p>
-        <div class="wrapper1">
-            <!-- tombol add image -->
-            <a href="/photos-create" class="add">+</a>
 
-            <!-- foreach image -->
-            @foreach ($photos as $img)
-            @php $photo = Storage::url('images/'.$img->photo); @endphp
-            <a href="" class="images"><img src="{{ url($photo) }}" alt=""></a>
-            @endforeach
-        </div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const imageBtn = document.getElementById("imageBtn");
+                const albumBtn = document.getElementById("AlbumBtn");
+                const photoWrapper = document.querySelector(".photo-wrapper");
+                const albumWrapper = document.querySelector(".album-wrapper");
+
+                photoWrapper.style.display = "flex";
+                albumWrapper.style.display = "none";
+
+                imageBtn.addEventListener("click", function () {
+                    photoWrapper.style.display = "flex";
+                    albumWrapper.style.display = "none";
+
+                    imageBtn.parentElement.classList.add("btn-active");
+                    albumBtn.parentElement.classList.remove("btn-active");
+                });
+
+                albumBtn.addEventListener("click", function () {
+                    photoWrapper.style.display = "none";
+                    albumWrapper.style.display = "flex";
+
+                    albumBtn.parentElement.classList.add("btn-active");
+                    imageBtn.parentElement.classList.remove("btn-active");
+                });
+            });
+
+        </script>
+
     </div>
-
-
-    <script>
-        document.getElementById('file-input').addEventListener('change', function (event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    document.getElementById('uploaded-image').src = e.target.result;
-                }
-                reader.readAsDataURL(file);
-            }
-        });
-
-    </script>
 </body>
 
 </html>

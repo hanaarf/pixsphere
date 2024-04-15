@@ -70,6 +70,11 @@
         </div>
     </nav>
 
+    @foreach ($photos as $img)
+    @php
+    $isLiked = in_array($img->id, $likedPhotoIds);
+    @endphp
+    @endforeach
     <div class="main">
         <div class="img">
             <div class="name">
@@ -84,10 +89,44 @@
                 <img src="{{ asset('storage/images/' . $photo->photo) }}" alt="" class="pict">
             </div>
             <div class="like">
-                <span class="material-symbols-outlined">
-                    favorite
-                </span>
-                <p class="like-count">4</p>
+                <button class="btn-like" id="likeButton{{ $photo->id }}" onclick="toggleLike({{ $photo->id }})">
+                    <span
+                        class="material-symbols-outlined{{ in_array($photo->id, $likedPhotoIds) ? ' text-danger' : '' }}"
+                        id="likeIcon{{ $photo->id }}">
+                        favorite
+                    </span>
+                </button>
+                <p class="like-count" id="likeCount{{ $photo->id }}">{{ $photo->likes->count() }}</p>
+                <script>
+                    function toggleLike(photoId) {
+                        fetch(`/photos/${photoId}/like`, {
+                                method: 'POST',
+                                headers: {
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                    'Content-Type': 'application/json',
+                                    'Accept': 'application/json',
+                                },
+                                body: JSON.stringify({}),
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                const likeIcon = document.getElementById('likeIcon' + photoId);
+                                const likeCount = document.getElementById('likeCount' + photoId);
+                                if (data.isLiked) {
+                                    likeIcon.classList.add('text-danger');
+                                    likeCount.textContent = parseInt(likeCount.textContent) + 1;
+                                } else {
+                                    likeIcon.classList.remove('text-danger');
+                                    likeCount.textContent = parseInt(likeCount.textContent) - 1;
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                            });
+                    }
+
+                </script>
+
                 <span class="material-symbols-outlined">
                     chat
                 </span>

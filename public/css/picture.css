@@ -12,6 +12,22 @@ body {
     font-family: 'Poppins', sans-serif;
     display: flex;
 }
+.btn-like{
+    margin-top: 4px;
+    border: none;
+    background-color: transparent;
+}
+.btn-komen{
+    border: none;
+    background-color: transparent;
+}
+.like-count{
+    margin-top: 5px;
+    margin-left: -15px;
+}
+.comment-count{
+    margin-left: -10px;
+}
 .vertical-line {
     margin-left: 40px;
     width: 1px;
@@ -42,20 +58,18 @@ body {
     margin-bottom: 10px;
     border-radius: 20px;
     width: 690px;
-    height: 390px;
+    background-color: #f2f2f2;
+    height: 400px;
 }
 .box-img img{
-    border-radius: 10px;
-    width: 700px;
     height: 400px;
 }
 .like{
-    margin: 5px 3px;
     display: flex;
-    gap: 10px;
+    gap: 15px;
     align-items: center;
 }
-.like p{
+.like p{    
     margin-top: 10px;
 }
 .text-name span{

@@ -13,9 +13,11 @@ body {
 }
 
 .container-fluidd {
-    width: 93%;
-    height: 253px;
-    background: linear-gradient(to bottom right, #bcceeb, #ADBFDF);
+    width: 92%;
+    height: 243px;
+    background-image: url(../img/bgg.png);
+    background-repeat: no-repeat;
+    background-size: cover; 
     justify-content: center;
     align-items: center;
     border-radius: 30px;
@@ -23,7 +25,7 @@ body {
 
 .search-container {
     position: absolute;
-    width: 70%;
+    width: 55%;
     top: 48%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -32,17 +34,35 @@ body {
     border-radius: 20px;
     box-shadow: 0 0 25px rgba(146, 145, 145, 0.25);
     display: flex;
+    gap: 5px;
     align-items: center;
     justify-content: center;
 }
+.form-cari{
+    display: flex;
+}
+.btn-cari{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #78787b;
+    background: none;
+    border: none;
+}
 
+.btn-cari span{
+    font-size: 20px;
+}
 .search-input {
     width: 80%;
-    padding: 10px;
+    padding: 5px;
     border: none;
     border-radius: 10px;
     box-shadow: none;
     outline: none;
+}
+.search-input:focus {
+    background-color: none; 
 }
 
 .search-icon {
@@ -62,22 +82,24 @@ body {
 .wrapper {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
     text-align: left; 
 }
-
 .box {
     width: 30%;
     height: 330px;
     margin: 10px;
     margin-top: 20px;
+    margin-left: 16px;
+    margin-right: 16px;
     margin-bottom: 20px;
     text-align: center; 
     display: inline-block;
+    cursor: pointer;
 }
 
 .box img {
     width: 100%;
+    border: 1px solid rgb(240, 240, 240);
     border-radius: 20px;
     margin: auto; 
     object-fit: cover;
@@ -89,7 +111,10 @@ body {
     display: flex;
     justify-content: space-between;
 }
-
+.box .info a{
+    color: #1a1a1a;
+    text-decoration: none;
+}
 .box .info .name {
     display: flex;
     gap: 10px;
@@ -188,6 +213,11 @@ body {
     font-weight: 600;
     color: #1a1a1a;
 }
+.infoy .name .textusn span a{
+    font-weight: 600;
+    color: #1a1a1a;
+    text-decoration: none;
+}
 .infoy .name .textusn {
     font-weight: 500;
     color: #1a1a1acb;
@@ -196,6 +226,131 @@ body {
     white-space: nowrap;
     overflow: hidden;
 }
+.button{
+    margin-top: 40px;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    font-size: 13px;
+}
+.button button{
+    border: none;
+    background: transparent;
+}
+.btn-active{
+    padding: 5px 10px;
+    background-color: #D9D9D9;
+    border-radius: 20px;
+    cursor: pointer;
+}
+.user{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.user .div-user {
+    margin-top: 10px;
+    background-color: #ffffff;
+    border: 1px solid #E6E6E6;
+    border-radius: 30px;
+    width: 95%;
+    height: 135px;
+    position: relative;
+    display: flex;
+}
+
+.user .konten {
+    left: 0;
+    top: 0;
+    height: 100%;
+    border-radius: 30px 0px 0px 30px;
+    width: 8%;
+    background-color: #DDEAFF;
+}
+
+.user .div-user .img-prof {
+    position: absolute;
+    top: 49%;
+    left: 7%;
+    transform: translate(-50%, -50%);
+}
+.user .info{
+    width: 100%;
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: 60px;
+}
+.user .kanan{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.user .kiri p{
+    color: #4F4E50;
+    font-size: 12px;
+}
+.user .kanan a{
+    color: #1F2837;
+}
+.user .arrow {
+    font-style: italic;
+    transform: rotate(-45deg);
+    display: inline-block; 
+    color: #9AB2DB;
+}
+.footer{
+    font-family: 'Poppins', sans-serif;
+    background-color: #ffff;
+    border-top: 1px solid #f1f1f1;
+    padding: 30px 50px;
+}
+.footer .atas{
+    display: flex;
+    justify-content: space-between;
+}
+.footer .atas .logo-pixsphere{
+    width: 140px;
+}
+.footer .atas .link ul{
+    margin-left: -13px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    list-style-type: none;
+    color: #2D2C41;
+}
+.footer .atas .link ul li{
+    margin-top: 30px;
+    font-size: 13px;
+    font-weight: 550;
+}
+.footer .atas .logo-sosmed{
+    margin-top: 20px;
+    height: 25px;
+}
+.footer .bawahh{
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+}
+.footer .bawahh .linkk ul{
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 25px;
+    list-style-type: none;
+    color: #5f5f5f;
+}
+.footer .bawahh .linkk ul li{
+    margin-top: 25px;
+    margin-bottom: 5px;
+    font-size: 12px;
+}
+
 
 @media screen and (max-width: 978px) {
     .box {

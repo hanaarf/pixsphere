@@ -32,15 +32,9 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="/home">Home</a>
                     </li>
-                    @if (Auth::user()->role === 'admin')
-                    <li class="nav-item">
-                        <a class="nav-link" href="/report">Report</a>
-                    </li>
-                    @else
                     <li class="nav-item">
                         <a class="nav-link" href="/albums">Create</a>
                     </li>
-                    @endif
                 </ul>
                 @auth
                 <div class="dropdown" style="display: flex;align-items: center;gap: 8px;">
@@ -56,6 +50,7 @@
                     <ul class="dropdown-menu">
                         <p style="font-size: 14px;font-weight: 600;padding: 10px;color: #959396;">Welcome
                             {{ auth()->user()->name}} !</p>
+                        @endauth
                         <li><a class="dropdown-item"
                                 style="display: flex;align-items: center;gap: 5px;font-size: 14px;font-weight: 400;"
                                 href="/profile"><span class="material-symbols-outlined"
@@ -71,11 +66,9 @@
                                     style="color: #d33e30;font-size: 18px;"> logout</span> Logout</a></li>
                     </ul>
                 </div>
-                @endauth
             </div>
         </div>
     </nav>
-
 
     <div class="wrapperr">
         <div class="container-fluidd">
@@ -83,33 +76,33 @@
                 <form action="{{ route('search') }}" method="POST" class="form-cari">
                     @csrf
                     <button class="btn-cari"><span class="material-symbols-outlined">search</span></button>
-                    <input type="text" class="search-input" name="search" placeholder="Search..." autocomplete="off"
-                        required>
+                    <input type="text" class="search-input" name="search" value="{{ $keyword }}" placeholder="Search..."
+                        autocomplete="off" required>
                 </form>
             </div>
         </div>
     </div>
 
     <div class="main">
-        <!-- dropdown filter -->
-        <div class="dropdown">
-            <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"
-                style="border-radius: 15px;border: 1px solid #B8B8B8;margin-left: 10px;margin-bottom: 20px;">
-                Filter
-            </button>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item filter-option" href="#" data-filter="all">All</a></li>
-                <li><a class="dropdown-item filter-option" href="#" data-filter="liked">Liked</a></li>
-            </ul>
+        <p><a href="/home">Home </a>> {{ $keyword }}</p>
+        @if($count > 0)
+        <h5>Search for "{{ $keyword }}"</h5>
+        @else
+        <h5>No results found for "{{ $keyword }}"</h5>
+        @endif
+
+        <div class="button">
+            <div class="{{ $searchType === 'image' ? 'btn-active' : '' }}"><button id="imageBtn">Image</button></div>
+            <div class="{{ $searchType === 'people' ? 'btn-active' : '' }}"><button id="peopleBtn">People</button></div>
         </div>
 
-        <div class="wrapper">
-            @foreach ($photos as $img)
 
+        <hr>
+        <div class="wrapper" id="imageWrapper">
+            @foreach ($photos as $img)
             @php
             $photo = Storage::url('images/'.$img->photo);
             $username = $img->user->username;
-            $user_id = $img->user_id;
             $photo_profil = $img->user->photo_profil;
             $title = $img->title;
             $idimg = $img->id;
@@ -122,12 +115,10 @@
                 <img src="{{ url($photo) }}" width="200px" height="100px" data-bs-toggle="modal"
                     data-bs-target="#{{ $modalId }}">
                 <div class="info">
-                    <a href="/profile/{{ $user_id }}">
-                        <div class="name">
-                            <img src="profile_images/{{ $photo_profil }}" alt="">
-                            <p>{{ $username }}</p>
-                        </div>
-                    </a>
+                    <div class="name">
+                        <img src="profile_images/{{ $photo_profil }}" alt="">
+                        <p>{{ $username }}</p>
+                    </div>
                     <div class="like">
                         <button class="btn-like" id="likeButton{{ $img->id }}" onclick="toggleLike({{ $img->id }})">
                             <span
@@ -137,7 +128,6 @@
                             </span>
                         </button>
                         <p class="like-count" id="likeCount{{ $img->id }}">{{ $img->likes->count() }}</p>
-
                         <script>
                             function toggleLike(photoId) {
                                 fetch(`/photos/${photoId}/like`, {
@@ -168,7 +158,6 @@
 
                         </script>
 
-
                         <button class="btn-komen">
                             <a href="{{ route('photo.detail', $idimg) }}"><span class="material-symbols-outlined">
                                     chat
@@ -189,14 +178,10 @@
                             <a href="{{ route('photo.detail', $idimg) }}">
                                 <img src="{{ url($photo) }}" alt="" class="img-modal">
                             </a>
-
                             <div class="infoy">
                                 <div class="name">
-                                    <a href="/profile/{{ $user_id }}">
-                                        <img src="profile_images/{{ $photo_profil }}" alt="">
-                                    </a>
-                                    <p class="textusn"><span><a href="/profile/{{ $user_id }}">{{ $username }}
-                                            </a></span> {{ ($title) }}</p>
+                                    <img src="profile_images/{{ $photo_profil }}" alt="">
+                                    <p class="textusn"><span>{{ $username }} </span> {{ ($title) }}</p>
                                 </div>
                             </div>
                         </div>
@@ -206,35 +191,60 @@
             @endforeach
         </div>
 
+        <div id="peopleWrapper" style="display: none;">
+            @if($users->isNotEmpty())
+            @foreach($users as $user)
+            <div class="user">
+                <div class="div-user">
+                    <div class="konten"></div>
+                    <div class="img-prof"
+                        style="display:flex;width:80px;height: 80px;border-radius: 50%;padding: 4px;border: 2px solid #DDEAFF;justify-content: center;align-items: center;background-color:#F7FAFF">
+                        <img src="{{ asset('profile_images/' . $user->photo_profil) }}" alt="" style="width: 70px;height: 70px;border-radius: 50%;">
+                    </div>
+                    <div class="info">
+                        <div class="kiri">
+                            <h5 >{{ $user->username }}</h5   >
+                            <p>{{ $user->name }}</p>
+                        </div>
+                        <div class="kanan">
+                            <a href="profile/{{ $user->id }}">See More</a>
+                            <span class="material-symbols-outlined arrow">
+                                arrow_forward
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+            @endif
+        </div>
+
         <script>
             document.addEventListener("DOMContentLoaded", function () {
-                function applyFilter(filter) {
-                    const photoBoxes = document.querySelectorAll('.photo-box');
-                    photoBoxes.forEach(function (box) {
-                        const isLiked = box.dataset.liked === 'true';
-                        if (filter === 'all') {
-                            box.style.display = 'block';
-                        } else if (filter === 'liked' && isLiked) {
-                            box.style.display = 'block';
-                        } else {
-                            box.style.display = 'none';
-                        }
-                    });
-                }
+                const imageBtn = document.getElementById("imageBtn");
+                const peopleBtn = document.getElementById("peopleBtn");
+                const imageWrapper = document.getElementById("imageWrapper");
+                const peopleWrapper = document.getElementById("peopleWrapper");
 
-                const filterOptions = document.querySelectorAll('.filter-option');
-                filterOptions.forEach(function (option) {
-                    option.addEventListener('click', function (event) {
-                        event.preventDefault();
-                        const filter = event.target.dataset.filter;
-                        applyFilter(filter);
-                    });
+                imageBtn.addEventListener("click", function () {
+                    imageWrapper.style.display = "block";
+                    peopleWrapper.style.display = "none";
+
+                    imageBtn.parentNode.classList.add('btn-active');
+                    peopleBtn.parentNode.classList.remove('btn-active');
+                });
+
+                peopleBtn.addEventListener("click", function () {
+                    imageWrapper.style.display = "none";
+                    peopleWrapper.style.display = "block";
+
+                    peopleBtn.parentNode.classList.add('btn-active');
+                    imageBtn.parentNode.classList.remove('btn-active');
                 });
             });
 
         </script>
     </div>
-
     <div class="footer">
         <div class="atas">
             <img src="img/logo_pixsphere.png" alt="" class="logo-pixsphere">

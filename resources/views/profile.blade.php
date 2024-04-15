@@ -21,7 +21,7 @@
 <body>
 @auth
     <nav class="navbar navbar-expand-lg"
-        style="background-color: #F6F8FB;padding: 0px 30px;border:1px solid #ECECEC ; box-shadow: 0 4px 8px rgba(220, 220, 220, 0.25);">
+        style="background-color: #F6F8FB;padding: 0px 30px;border:1px solid #ECECEC ;">
         <div class="container-fluid">
             <img src="img/logo_pixsphere.png" alt="Pixsphere" class="navbar-brand" width="128px">
             <a class="navbar-brand" href="#"></a>

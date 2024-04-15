@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Album;
+use App\Models\Like;
 use App\Models\Photo;
 use App\Models\Comment;
 use Illuminate\Http\Request;
@@ -14,9 +15,15 @@ class PhotoController extends Controller
 {
     public function home()
     {
-        $photos = Photo::with('user')->get();
-        return view('home', compact('photos'));
+        $userId = Auth::id();
+        $likedPhotos = Like::where('user_id', $userId)->pluck('photo_id'); 
+        $photos = Photo::with('user')->orderBy('created_at', 'desc')->get();
+        
+        $likedPhotoIds = $likedPhotos->toArray();
+        
+        return view('home', compact('photos', 'likedPhotoIds'));
     }
+    
 
     public function createphoto()
     {
@@ -73,9 +80,13 @@ class PhotoController extends Controller
 
     public function detailFoto($id)
     {
+        $userId = Auth::id();
+        $likedPhotos = Like::where('user_id', $userId)->pluck('photo_id'); 
+        $photos = Photo::with('user')->orderBy('created_at', 'desc')->get();
+        $likedPhotoIds = $likedPhotos->toArray();
         $photo = Photo::findOrFail($id);
         $comments = Comment::where('photo_id', $id)->with('user')->get();
-        return view('detailFoto', compact('photo', 'comments'));
+        return view('detailFoto', compact('photo', 'comments','likedPhotoIds','photos'));
     }
 
 }

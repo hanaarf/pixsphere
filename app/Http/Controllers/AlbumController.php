@@ -12,8 +12,8 @@ class AlbumController extends Controller
     public function index ()
     {
         $user_id = Auth::id();
-        $albums = Album::where('user_id', $user_id)->get();
-        $photos = Photo::where('user_id', $user_id)->get();
+        $albums = Album::where('user_id', $user_id)->orderBy('created_at', 'desc')->get();
+        $photos = Photo::where('user_id', $user_id)->orderBy('created_at', 'desc')->get();
         return view('gallery', compact('albums', 'photos'));
     }
 
@@ -50,8 +50,10 @@ class AlbumController extends Controller
 
     public function show($albumId)
     {
+        $user_id = Auth::id();
+        $foto = Photo::where('user_id', $user_id)->get();
         $album = Album::with('photos', 'user')->find($albumId);
         $photos = $album->photos()->with('user')->get();
-        return view('detailAlbum', compact('album', 'photos'));
+        return view('detailAlbum', compact('album', 'photos','foto'));
     }
 }
