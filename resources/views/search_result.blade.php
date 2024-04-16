@@ -85,11 +85,7 @@
 
     <div class="main">
         <p><a href="/home">Home </a>> {{ $keyword }}</p>
-        @if($count > 0)
         <h5>Search for "{{ $keyword }}"</h5>
-        @else
-        <h5>No results found for "{{ $keyword }}"</h5>
-        @endif
 
         <div class="button">
             <div class="{{ $searchType === 'image' ? 'btn-active' : '' }}"><button id="imageBtn">Image</button></div>
@@ -99,6 +95,11 @@
 
         <hr>
         <div class="wrapper" id="imageWrapper">
+            @if($count > 0)
+            @else
+            <p>No results Image found for "{{ $keyword }}"</p>
+            @endif
+
             @foreach ($photos as $img)
             @php
             $photo = Storage::url('images/'.$img->photo);
@@ -113,7 +114,7 @@
 
             <div class="box photo-box" data-liked="{{ $isLiked ? 'true' : 'false' }}">
                 <img src="{{ url($photo) }}" width="200px" height="100px" data-bs-toggle="modal"
-                    data-bs-target="#{{ $modalId }}">
+                    data-bs-target="#{{ $modalId }}" class="zoom-effect">
                 <div class="info">
                     <div class="name">
                         <img src="profile_images/{{ $photo_profil }}" alt="">
@@ -199,11 +200,12 @@
                     <div class="konten"></div>
                     <div class="img-prof"
                         style="display:flex;width:80px;height: 80px;border-radius: 50%;padding: 4px;border: 2px solid #DDEAFF;justify-content: center;align-items: center;background-color:#F7FAFF">
-                        <img src="{{ asset('profile_images/' . $user->photo_profil) }}" alt="" style="width: 70px;height: 70px;border-radius: 50%;">
+                        <img src="{{ asset('profile_images/' . $user->photo_profil) }}" alt=""
+                            style="width: 70px;height: 70px;border-radius: 50%;">
                     </div>
                     <div class="info">
                         <div class="kiri">
-                            <h5 >{{ $user->username }}</h5   >
+                            <h5>{{ $user->username }}</h5>
                             <p>{{ $user->name }}</p>
                         </div>
                         <div class="kanan">
@@ -216,6 +218,8 @@
                 </div>
             </div>
             @endforeach
+            @else
+            <p>No results people found for "{{ $keyword }}"</p>
             @endif
         </div>
 

@@ -120,7 +120,7 @@
 
             <div class="box photo-box" data-liked="{{ $isLiked ? 'true' : 'false' }}">
                 <img src="{{ url($photo) }}" width="200px" height="100px" data-bs-toggle="modal"
-                    data-bs-target="#{{ $modalId }}">
+                    data-bs-target="#{{ $modalId }}" class="zoom-effect">
                 <div class="info">
                     <a href="/profile/{{ $user_id }}">
                         <div class="name">

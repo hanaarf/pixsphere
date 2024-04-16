@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class PhotoController extends Controller
 {
@@ -72,11 +73,12 @@ class PhotoController extends Controller
         $albumId = $request->input('album_id');
         $album = Album::findOrFail($albumId);
 
-        $photoId = $request->input('photo_id');
+        $photoIds = $request->input('photo_ids');
+        $album->photos()->attach($photoIds);
 
-        $album->photos()->attach($photoId);
-        return redirect()->route('albums');
+        return redirect()->route('albums.show', ['albumId' => $albumId]);
     }
+
 
     public function detailFoto($id)
     {
@@ -87,6 +89,18 @@ class PhotoController extends Controller
         $photo = Photo::findOrFail($id);
         $comments = Comment::where('photo_id', $id)->with('user')->get();
         return view('detailFoto', compact('photo', 'comments','likedPhotoIds','photos'));
+    }
+
+    public function delete($id)
+    {
+        $photo = Photo::findOrFail($id);
+        Storage::delete('public/images/' . $photo->photo);
+        $photo->delete();
+
+        // Menyimpan pesan notifikasi dalam sesi
+        Alert::success('Success', 'Photo deleted successfully!');
+
+        return redirect()->back();
     }
 
 }

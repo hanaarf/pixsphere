@@ -18,7 +18,7 @@
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg"
+    <nav class="navbar navbar-expand-lg"
         style="background-color: #F6F8FB;padding: 0px 30px;border:1px solid #ECECEC ; box-shadow: 0 4px 8px rgba(220, 220, 220, 0.25);">
         <div class="container-fluid">
             <img src="img/logo_pixsphere.png" alt="Pixsphere" class="navbar-brand" width="128px">
@@ -76,7 +76,7 @@
         <p>Post an image</p>
 
         <form id="uploadForm" method="POST" action="{{ route('photos.upload') }}" enctype="multipart/form-data">
-        @csrf
+            @csrf
             <div class="form-container">
                 <div class="image-preview" id="imagePreview">
                     <i class="fas fa-cloud-upload-alt"></i>
@@ -97,15 +97,22 @@
                     <input type="text" id="description" name="description">
                 </div>
 
+                <br>
                 <div class="form-group">
-                    <label for="album_id">Add to Album (optional):</label>
-                    <select name="album_id" id="album_id" class="form-control">
-                        <option value="">-- Select Album --</option>
+                    <label>Add to Album (optional):</label>
+                    <div>
                         @foreach ($albums as $album)
-                        <option value="{{ $album->id }}">{{ $album->name }}</option>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="album_id" id="album{{ $album->id }}"
+                                value="{{ $album->id }}">
+                            <label class="form-check-label" for="album{{ $album->id }}">
+                                {{ $album->name }}
+                            </label>
+                        </div>
                         @endforeach
-                    </select>
+                    </div>
                 </div>
+
 
                 <div class="button">
                     <button class="btn btn rounded-pill fw-semibold" type="submit"

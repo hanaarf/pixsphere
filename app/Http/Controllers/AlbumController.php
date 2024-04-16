@@ -6,6 +6,7 @@ use App\Models\Album;
 use App\Models\Photo;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AlbumController extends Controller
 {
@@ -51,9 +52,26 @@ class AlbumController extends Controller
     public function show($albumId)
     {
         $user_id = Auth::id();
-        $foto = Photo::where('user_id', $user_id)->get();
+        $foto = Photo::where('user_id', $user_id)->orderBy('created_at', 'desc')->get();
         $album = Album::with('photos', 'user')->find($albumId);
-        $photos = $album->photos()->with('user')->get();
+        $photos = $album->photos()->with('user')->orderBy('created_at', 'desc')->get();
         return view('detailAlbum', compact('album', 'photos','foto'));
     }
+
+    public function delete($id)
+    {
+        $album = Album::findOrFail($id);
+        if ($album->cover) {
+            $coverPath = public_path($album->cover);
+            if (file_exists($coverPath)) {
+                unlink($coverPath); 
+            }
+        }
+        $album->delete();
+        Alert::success('Success', 'Album deleted successfully!');
+
+        return redirect()->back();
+    }
+
+
 }

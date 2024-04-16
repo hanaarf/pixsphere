@@ -89,53 +89,58 @@
         <p class="info">{{ $totalPhoto }} Photos</p>
         <p class="tanggal">{{ $album->created_at->format('d/m/Y') }}</p>
 
-        <div class="wrapper">
-            @auth
-            @if(auth()->user()->id == $album->user_id)
-            <div class="styled-div" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                <p>+</p>
-            </div>
-            @endif
-            @endauth
 
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form method="POST" action="{{ route('photos.addtoalbum') }}" enctype="multipart/form-data">
-                                @csrf
+        @auth
+        @if(auth()->user()->id == $album->user_id)
+        <div class="styled-div" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <p>+</p>
+        </div>
+        @endif
+        @endauth
 
-                                <div class="form-group">
-                                    <label for="photo">Select Photo:</label>
-                                    <select name="photo_id" id="photo_id" class="form-control">
-                                        <option value="">-- Select Photo --</option>
-                                        @foreach ($foto as $photo)
-                                        <option value="{{ $photo->id }}">{{ $photo->title }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="POST" action="{{ route('photos.addtoalbum') }}" enctype="multipart/form-data">
+                            @csrf
 
-                                <input type="hidden" name="album_id" id="album_id" value="{{ $album->id }}">
+                            <div class="form-group">
+                                <label>Select Photo:</label>
+                                <ul>
+                                    @foreach ($foto as $photo)
+                                    <li>
+                                        <input type="checkbox" name="photo_ids[]" id="cb{{ $photo->id }}"
+                                            value="{{ $photo->id }}" />
+                                        <label for="cb{{ $photo->id }}"><img
+                                                src="{{ asset('storage/images/' . $photo->photo) }}"
+                                                alt="Photo {{ $photo->title }}" /></label>
+                                    </li>
+                                    @endforeach
+                                </ul>
+                            </div>
 
-                                <input type="hidden" name="user_id" value="1">
+                            <input type="hidden" name="album_id" id="album_id" value="{{ $album->id }}">
+                            <input type="hidden" name="user_id" value="1">
 
-                                <br>
-                                <button type="submit"
-                                    class="w-full bg-blue-main text-white font-medium font-Mplus1 text-sm py-2 rounded">Add
-                                    to Album</button>
-                            </form>
-                        </div>
+                            <br>
+                            <button type="submit"
+                                class="w-full bg-blue-main text-white font-medium font-Mplus1 text-sm py-2 rounded">Add
+                                to Album</button>
+                        </form>
 
                     </div>
+
                 </div>
             </div>
+        </div>
 
+        <div class="wrapper">
             <!-- foreach folder -->
             @foreach($photos as $photo)
             @php
@@ -144,19 +149,13 @@
             @endphp
 
             <div class="pictalbum">
-                <img src="{{ url($url) }}" alt="">
-                <div class="overlay">
-                    <button class="delete">
-                        <span class="material-symbols-outlined">
-                            delete
-                        </span>
-                    </button>
-                </div>
+                <a href="/photos/{{ $photo->id }}">
+                    <img src="{{ url($url) }}" alt="">
+                </a>
             </div>
             @endforeach
         </div>
     </div>
-
 
 </body>
 

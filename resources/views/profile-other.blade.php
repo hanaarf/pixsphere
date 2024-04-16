@@ -83,26 +83,95 @@
         <p class="name">{{ $user->name }}</p>
         <p class="bio">{{ $user->bio }}</p>
         <div class="text">
-            <p>80 Followers </p>
-            <p>80 Following </p>
-            <p>0 Post</p>
+            <p data-bs-toggle="modal" data-bs-target="#followerModal">{{ $followerCount }} Followers </p>
+            <p data-bs-toggle="modal" data-bs-target="#followingModal ">{{ $followingCount }} Following</p>
+            <p>{{ $photoCount }} Post</p>
+        </div>
+
+        <!-- Modal followers -->
+        <div class="modal fade" id="followerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Followers :</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        @if($followerUsers->isEmpty())
+                        <p>No followers here</p>
+                        @else
+                        @foreach($followerUsers as $follower)
+                        <a href="/profile/{{ $follower->id }}">
+                        <button class="btn btn-white" type="button" style="display: flex;align-items: center;gap: 8px;border: none;">
+                            <div class="img-prof"
+                                style="display:flex;width:47px;height: 47px;border-radius: 50%;padding: 4px;border: 1px solid #332C54;justify-content: center;align-items: center;">
+                                <img src="{{ asset('profile_images/' . $follower->photo_profil) }}" alt=""
+                                    style="width: 40px; height: 40px; border-radius: 50%;">
+                            </div>
+                            <p style="margin-top: 14px;cursor: pointer;">{{ $follower->username }}</p>
+                        </button>
+                        </a>
+                        @endforeach
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal following -->
+        <div class="modal fade" id="followingModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Following :</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="modal-body">
+                            @if($followingUsers->isEmpty())
+                            <p>No following</p>
+                            @else
+                            @foreach($followingUsers as $following)
+                           <a href="/profile/{{ $following->id }}">
+                           <button class="btn btn-white" type="button"     style="display: flex;align-items: center;gap: 8px;border: none;">
+                                <div class="img-prof"
+                                    style="display:flex;width:47px;height: 47px;border-radius: 50%;padding: 4px;border: 1px solid #332C54;justify-content: center;align-items: center;">
+                                    <img src="{{ asset('profile_images/' . $following->photo_profil) }}" alt=""
+                                        style="width: 40px; height: 40px; border-radius: 50%;">
+                                </div>
+                                <p style="margin-top: 14px;cursor: pointer;">{{ $following->username }}</p>
+                            </button>
+                           </a>
+                            @endforeach
+                            @endif
+                        </div>
+
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="button">
-            <div class="button">
-                @if(auth()->check() && auth()->user()->id == $user->id)
-                <a href="{{ route('setting') }}" class="btn btn rounded-pill fw-semibold" type="submit"
-                    style="background-color: #F9F9F9; color: #1A1A1A; border: 2px solid #6C7195;"
-                    onmouseover="this.style.backgroundColor='#F0F3F6';"
-                    onmouseout="this.style.backgroundColor='#F9F9F9';this.style.color='#1A1A1A';">Edit Profile</a>
-                @else
-                <a href="" class="btn btn rounded-pill fw-semibold" type="submit"
-                    style="background-color: #F9F9F9; color: #1A1A1A; border: 2px solid #6C7195;"
-                    onmouseover="this.style.backgroundColor='#F0F3F6';"
-                    onmouseout="this.style.backgroundColor='#F9F9F9';this.style.color='#1A1A1A';">Follow</a>
-                @endif
-            </div>
-
+            @if(auth()->check() && auth()->user()->id == $user->id)
+            <a href="{{ route('setting') }}" class="btn btn rounded-pill fw-semibold" type="submit"
+                style="background-color: #F9F9F9; color: #1A1A1A; border: 2px solid #6C7195;"
+                onmouseover="this.style.backgroundColor='#F0F3F6';"
+                onmouseout="this.style.backgroundColor='#F9F9F9';this.style.color='#1A1A1A';">Edit Profile</a>
+            @else
+            @if (Auth::check())
+            <form action="/follow/{{ $user->id }}" method="POST">
+                @csrf
+                <button type="submit" class="btn btn rounded-pill fw-semibold" style="background-color: {{ $isFollowing ? '#ACC3EA' : '#F9F9F9' }};
+                        color: {{ $isFollowing ? '#FFFFFF' : '#1A1A1A' }};
+                        border: 2px solid #ACC3EA;" onmouseover="this.style.backgroundColor='{{ $isFollowing ? '#ACC3EA' : '#F0F3F6' }}';
+                        this.style.color='{{ $isFollowing ? '#FFFFFF' : '#1A1A1A' }}';" onmouseout="this.style.backgroundColor='{{ $isFollowing ? '#ACC3EA' : '#F9F9F9' }}';
+                        this.style.color='{{ $isFollowing ? '#FFFFFF' : '#1A1A1A' }}';">
+                    {{ $isFollowing ? 'Followed' : 'Follow' }}
+                </button>
+            </form>
+            @endif
+            @endif
         </div>
         <br>
 

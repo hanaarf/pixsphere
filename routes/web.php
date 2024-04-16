@@ -33,19 +33,22 @@ Route::get('/profile/{user}', [UserController::class, 'show'])->name('profile.sh
 Route::get('/albums', [AlbumController::class, 'index'])->name('albums');
 Route::post('/albums/create', [AlbumController::class, 'createAlbum'])->name('albums.create');
 Route::get('/albums/{albumId}', [AlbumController::class, 'show'])->name('albums.show');
+Route::get('/albums/delete/{id}', [AlbumController::class, 'delete'])->name('albums.delete');
+
 
 Route::get('/home', [PhotoController::class, 'home'])->name('home')->middleware('auth');
 Route::get('/photos-create', [PhotoController::class, 'createphoto'])->name('photos.create');
 Route::post('/photos/upload', [PhotoController::class, 'upload'])->name('photos.upload');
 Route::post('/photos/addToAlbum', [PhotoController::class, 'addToAlbum'])->name('photos.addtoalbum');
 Route::get('/photos/{id}', [PhotoController::class, 'detailFoto'])->name('photo.detail');
+Route::get('/photos/delete/{id}', [PhotoController::class, 'delete'])->name('photos.delete');
+
 
 Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
 
 Route::post('/photos/{photo}/like', [LikeController::class, 'toggleLike'])->name('photos.like');
 
-Route::post('/follow', [FollowController::class, 'followUser'])->name('follow');
-Route::post('/unfollow', [FollowController::class, 'unfollowUser'])->name('unfollow');
+Route::Post('/follow/{id}', [FollowController::class, 'follow'])->middleware('auth');
 
 Route::post('/search', [SearchController::class, 'search'])->name('search');
 

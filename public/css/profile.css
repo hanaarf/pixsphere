@@ -48,6 +48,7 @@ body {
     color: #2F2F30;
 }
 .main p{
+    cursor: pointer;
     font-size: 15px;
     font-weight: 400;
 }

@@ -11,14 +11,15 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
     <!-- icon -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 
 <body style="background-color: #F9F9F9;padding: 0;margin: 0;">
-    <nav class="navbar navbar-expand-lg"
-        style="background-color: #F6F8FB;padding: 0px 30px;border:1px solid #ECECEC ;">
+    <nav class="navbar navbar-expand-lg" style="background-color: #F6F8FB;padding: 0px 30px;border:1px solid #ECECEC ;">
         <div class="container-fluid">
             <img src="img/logo_pixsphere.png" alt="Pixsphere" class="navbar-brand" width="128px">
             <a class="navbar-brand" href="#"></a>
@@ -111,42 +112,26 @@
                                     <input type="text" name="name" id="name" class="form-control" required class="">
                                 </div><br>
                                 <div class="form-group">
-                                    <label for="description" class="">Desc:</label>
+                                    <label for="description" class="description">Desc:</label>
                                     <input type="text" name="description" id="description" class="form-control" required
                                         class="">
                                 </div><br>
                                 <div class="form-group">
-                                    <label for="photo">Select Photos:</label>
-                                    <select name="photo_ids[]" id="photo_ids" class="form-control w-80" multiple>
-                                        <option value="">-- Select Photos --</option>
+                                    <label>Select Photos:</label>
+                                    <ul>
                                         @foreach ($photos as $photo)
-                                        <option value="{{ $photo->id }}"
-                                            data-photo-url="{{ Storage::url('images/'.$photo->photo) }}">
-                                            {{ $photo->title }}</option>
+                                        <li>
+                                            <input type="checkbox" id="cb{{ $photo->id }}" name="photo_ids[]"
+                                                value="{{ $photo->id }}" />
+                                            <label for="cb{{ $photo->id }}" class="label"><img
+                                                    src="{{ Storage::url('images/'.$photo->photo) }}" /></label>
+                                        </li>
                                         @endforeach
-                                    </select>
+                                    </ul>
                                 </div>
-                                <div id="selectedPhotos"></div>
-
-                                <script>
-                                    document.getElementById('photo_ids').addEventListener('change', function () {
-                                        var selectedPhotos = this.selectedOptions;
-                                        var selectedPhotosHtml = '';
-                                        for (var i = 0; i < selectedPhotos.length; i++) {
-                                            var photoUrl = selectedPhotos[i].getAttribute('data-photo-url');
-                                            var photoTitle = selectedPhotos[i].textContent;
-                                            selectedPhotosHtml += '<div><img src="' + photoUrl + '" alt="' +
-                                                photoTitle + '" width="200px"></div>';
-                                        }
-                                        document.getElementById('selectedPhotos').innerHTML =
-                                            selectedPhotosHtml;
-                                    });
-
-                                </script>
-
-
                                 <br><br>
-                                <button type="submit" class="btn btn-primary" style="background-color:#A6B0D8;border:none">Create
+                                <button type="submit" class="btn btn-primary"
+                                    style="background-color:#A6B0D8;border:none">Create
                                     Album</button>
                             </form>
                         </div>
@@ -157,19 +142,25 @@
             <!-- foreach folder -->
             @foreach ($albums as $album)
             {{-- @php $path = Storage::url('images/'.$img->path); @endphp --}}
-            <a href="{{ route('albums.show', $album->id) }}" class="folder">
-                <div class="menu">
-                    <div class="kiri">
-                        @if ($album->cover)
-                        <img src="{{ $album->cover }}" alt="">
-                        @else
-                        <img src="https://id-test-11.slatic.net/shop/186f07608a71497c6c35d88ef68a2b3b.jpeg"
-                            alt="Default Image">
-                        @endif
-                        <p>{{$album->name}}</p>
+            <div class="album-wrapper">
+                <a href="{{ route('albums.show', $album->id) }}" class="folder">
+                    <div class="menu">
+                        <div class="kiri">
+                            @if ($album->cover)
+                            <img src="{{ $album->cover }}" alt="">
+                            @else
+                            <img src="https://id-test-11.slatic.net/shop/186f07608a71497c6c35d88ef68a2b3b.jpeg"
+                                alt="Default Image">
+                            @endif
+                            <p>{{$album->name}}</p>
+                        </div>
                     </div>
+                </a>
+                <div class="delete-icon" data-id="{{ $album->id }}">
+                    <span class="material-symbols-outlined">delete</span>
                 </div>
-            </a>
+
+            </div>
             @endforeach
         </div>
 
@@ -181,7 +172,24 @@
             <!-- foreach image -->
             @foreach ($photos as $img)
             @php $photo = Storage::url('images/'.$img->photo); @endphp
-            <a href="" class="images"><img src="{{ url($photo) }}" alt=""></a>
+            <div class="image-container">
+                <a href="/photos/{{ $img->id }}" class="images">
+                    <img src="{{ url($photo) }}" alt="">
+                </a>
+                <div class="overlay">
+                    <p class="name-text">{{ $img->title }}</p>
+                    <div class="icon">
+                        <a href="/home">
+                            <span class="material-symbols-outlined">
+                                edit
+                            </span>
+                        </a>
+                        <a class="delete-photo" data-id="{{ $img->id }}">
+                            <span class="material-symbols-outlined">delete</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
             @endforeach
         </div>
     </div>
@@ -200,6 +208,64 @@
         });
 
     </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const deleteButtons = document.querySelectorAll('.delete-icon');
+
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const albumId = this.getAttribute('data-id'); // Mengambil ID album
+
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: 'You won\'t be able to revert this!',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Redirect to delete route
+                            window.location.href =
+                            `/albums/delete/${albumId}`; // Mengarahkan ke route delete dengan ID album
+                        }
+                    });
+                });
+            });
+        });
+
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const deleteButtons = document.querySelectorAll('.delete-photo');
+
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const photoId = this.getAttribute('data-id');
+
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: 'You won\'t be able to revert this!',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Redirect to delete route
+                            window.location.href = `/photos/delete/${photoId}`;
+                        }
+                    });
+                });
+            });
+        });
+
+    </script>
+
 </body>
 
 </html>

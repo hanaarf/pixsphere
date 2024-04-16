@@ -23,9 +23,11 @@ body {
     font-family: 'Poppins', sans-serif;
     padding: 50px 50px;
 }
-.main p{
+
+.main p {
     font-size: 14px;
 }
+
 .wrapper {
     margin-top: 20px;
     display: flex;
@@ -33,7 +35,7 @@ body {
     flex-wrap: wrap;
 }
 
-.wrapper .new img{
+.wrapper .new img {
     width: 245px;
     height: 170px;
 }
@@ -85,13 +87,13 @@ body {
     margin-top: 80px;
 }
 
-.wrapper1{
+.wrapper1 {
     display: flex;
     flex-wrap: wrap;
     gap: 40px;
 }
 
-.wrapper1 .add{
+.wrapper1 .add {
     border-radius: 10px;
     width: 250px;
     height: 180px;
@@ -104,7 +106,7 @@ body {
     color: black;
 }
 
-.wrapper1 .images img{
+.wrapper1 .images img {
     border-radius: 10px;
     width: 250px;
     height: 180px;
@@ -116,22 +118,23 @@ body {
     height: 60px;
     position: relative;
     margin: auto;
-  }
-  
-  .upload{
+}
+
+.upload {
     cursor: pointer;
 
-  }
-  .upload img {
+}
+
+.upload img {
     cursor: pointer;
     border-radius: 50%;
     border: 2px solid #bfd0ed;
     width: 100%;
     height: 100%;
     object-fit: cover;
-  }
-  
-  .upload .round {
+}
+
+.upload .round {
     position: absolute;
     top: 40px;
     bottom: 0;
@@ -143,19 +146,148 @@ body {
     text-align: center;
     border-radius: 50%;
     overflow: hidden;
-  }
-  
-  .upload .round input[type="file"] {
+}
+
+.upload .round input[type="file"] {
     position: absolute;
     transform: scale(2);
     opacity: 0;
-  }
-  
-  input[type=file]::-webkit-file-upload-button {
+}
+
+input[type=file]::-webkit-file-upload-button {
     cursor: pointer;
-  }
-  
-  .textcover{
+}
+
+.textcover {
     display: flex;
     justify-content: center;
-  }
+}
+
+.image-container {
+    position: relative;
+    display: inline-block;
+}
+
+.overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: linear-gradient(to bottom, transparent, rgba(50, 50, 50, 0.621));
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.name-text {
+    margin-top: 18px;
+    margin-left: 10px;
+    color: white;
+    font-weight: 500;
+    font-size: 17px;
+}
+
+.image-container:hover .overlay {
+    opacity: 1;
+}
+
+.icon a span {
+    font-size: 18px;
+}
+
+.material-symbols-outlined {
+    padding: 7px;
+    border-radius: 50px;
+    margin-right: 5px;
+    background-color: white;
+    color: black;
+    cursor: pointer;
+}
+.form-group .description{
+    margin-top: -30px;
+}
+
+ul {
+    list-style-type: none;
+}
+
+li {
+    display: inline-block;
+}
+
+input[type="checkbox"][id^="cb"] {
+    display: none;
+}
+
+.label {
+    border: 1px solid #fff;
+    padding: 10px;
+    display: block;
+    position: relative;
+    cursor: pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+label::before {
+    background-color: white;
+    color: white;
+    content: " ";
+    display: block;
+    border-radius: 50%;
+    border: 1px solid grey;
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    width: 25px;
+    height: 25px;
+    text-align: center;
+    line-height: 28px;
+    transition-duration: 0.4s;
+    transform: scale(0);
+}
+
+label img {
+    height: 100px;
+    width: 100px;
+    transition-duration: 0.2s;
+    transform-origin: 50% 50%;
+}
+
+:checked+label {
+    border-color: #ddd;
+}
+
+:checked+label::before {
+    content: "✓";
+    background-color: grey;
+    transform: scale(1);
+}
+
+:checked+label img {
+    transform: scale(0.9);
+    box-shadow: 0 0 5px #333;
+    z-index: -1;
+}
+
+.album-wrapper{
+    position: relative;
+    display: flex;
+}
+.delete-icon{
+    display: flex;
+    justify-content: end;
+}
+.delete-icon span{
+    margin-top: 125px;
+    position: absolute;
+    color: rgb(255, 255, 255);
+    background-color: transparent;
+}

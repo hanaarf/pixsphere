@@ -13,22 +13,19 @@ use Illuminate\Http\Request;
 
 class FollowController extends Controller
 {
-    public function followUser(Request $request)
+    public function follow($id)
     {
-        $follow = Follow::create([
-            'follower_id' => auth()->id(),
-            'followed_id' => $request->followed_id,
-        ]);
+        $followerId = Auth::id();
+        $followedId = $id;
 
-        return response()->json(['success' => true]);
-    }
+        $follow = Follow::firstOrNew(['follower_id' => $followerId, 'followed_id' => $followedId]);
 
-    public function unfollowUser(Request $request)
-    {
-        Follow::where('follower_id', auth()->id())
-            ->where('followed_id', $request->followed_id)
-            ->delete();
+        if ($follow->exists) {
+            $follow->delete();
+        } else {
+            $follow->save(); 
+        }
 
-        return response()->json(['success' => true]);
+        return back(); 
     }
 }
