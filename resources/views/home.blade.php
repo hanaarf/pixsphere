@@ -11,6 +11,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <!-- icon -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
@@ -119,8 +121,9 @@
             @endphp
 
             <div class="box photo-box" data-liked="{{ $isLiked ? 'true' : 'false' }}">
-                <img src="{{ url($photo) }}" width="200px" height="100px" data-bs-toggle="modal"
-                    data-bs-target="#{{ $modalId }}" class="zoom-effect">
+                <div data-aos="fade-up">
+                    <img src="{{ url($photo) }}" width="200px" height="100px" data-bs-toggle="modal" data-bs-target="#{{ $modalId }}" class="zoom-effect">
+                </div>
                 <div class="info">
                     <a href="/profile/{{ $user_id }}">
                         <div class="name">
@@ -137,7 +140,6 @@
                             </span>
                         </button>
                         <p class="like-count" id="likeCount{{ $img->id }}">{{ $img->likes->count() }}</p>
-
                         <script>
                             function toggleLike(photoId) {
                                 fetch(`/photos/${photoId}/like`, {
@@ -198,6 +200,14 @@
                                     <p class="textusn"><span><a href="/profile/{{ $user_id }}">{{ $username }}
                                             </a></span> {{ ($title) }}</p>
                                 </div>
+                                @auth
+                                @if(auth()->user()->role === 'admin')
+                                <div class="delete-photo" data-id="{{ $idimg }}">
+                                    <span class="material-symbols-outlined">delete</span>
+                                </div>
+                                @endif
+                                @endauth
+
                             </div>
                         </div>
                     </div>
@@ -270,6 +280,39 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const deleteButtons = document.querySelectorAll('.delete-photo');
+
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const photoId = this.getAttribute('data-id');
+
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: 'You won\'t be able to revert this!',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Redirect to delete route
+                            window.location.href = `/photos/delete/${photoId}`;
+                        }
+                    });
+                });
+            });
+        });
+
+    </script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+
 </body>
 
 </html>

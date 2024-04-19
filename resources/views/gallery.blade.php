@@ -18,8 +18,8 @@
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 
-<body style="background-color: #F9F9F9;padding: 0;margin: 0;">
-    <nav class="navbar navbar-expand-lg" style="background-color: #F6F8FB;padding: 0px 30px;border:1px solid #ECECEC ;">
+<body style="background-color: #FFFFFF;padding: 0;margin: 0;">
+    <nav class="navbar navbar-expand-lg" style="background-color: #FFFFFF;padding: 0px 30px;border:1px solid #ECECEC ;">
         <div class="container-fluid">
             <img src="img/logo_pixsphere.png" alt="Pixsphere" class="navbar-brand" width="128px">
             <a class="navbar-brand" href="#"></a>
@@ -116,19 +116,21 @@
                                     <input type="text" name="description" id="description" class="form-control" required
                                         class="">
                                 </div><br>
-                                <div class="form-group">
-                                    <label>Select Photos:</label>
-                                    <ul>
-                                        @foreach ($photos as $photo)
-                                        <li>
-                                            <input type="checkbox" id="cb{{ $photo->id }}" name="photo_ids[]"
-                                                value="{{ $photo->id }}" />
-                                            <label for="cb{{ $photo->id }}" class="label"><img
-                                                    src="{{ Storage::url('images/'.$photo->photo) }}" /></label>
-                                        </li>
-                                        @endforeach
-                                    </ul>
-                                </div>
+                                @if (!$photos->isEmpty())
+                                    <div class="form-group">
+                                        <label>Select Photos:</label>
+                                        <ul>
+                                            @foreach ($photos as $photo)
+                                            <li>
+                                                <input type="checkbox" id="cb{{ $photo->id }}" name="photo_ids[]"
+                                                    value="{{ $photo->id }}" />
+                                                <label for="cb{{ $photo->id }}" class="label"><img
+                                                        src="{{ Storage::url('images/'.$photo->photo) }}" /></label>
+                                            </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
                                 <br><br>
                                 <button type="submit" class="btn btn-primary"
                                     style="background-color:#A6B0D8;border:none">Create
@@ -179,11 +181,10 @@
                 <div class="overlay">
                     <p class="name-text">{{ $img->title }}</p>
                     <div class="icon">
-                        <a href="/home">
-                            <span class="material-symbols-outlined">
-                                edit
-                            </span>
+                        <a href="{{ route('photos.edit', $img->id) }}">
+                            <span class="material-symbols-outlined">edit</span>
                         </a>
+
                         <a class="delete-photo" data-id="{{ $img->id }}">
                             <span class="material-symbols-outlined">delete</span>
                         </a>
@@ -229,7 +230,7 @@
                         if (result.isConfirmed) {
                             // Redirect to delete route
                             window.location.href =
-                            `/albums/delete/${albumId}`; // Mengarahkan ke route delete dengan ID album
+                                `/albums/delete/${albumId}`; // Mengarahkan ke route delete dengan ID album
                         }
                     });
                 });
@@ -265,7 +266,41 @@
         });
 
     </script>
-
+<div class="footer">
+        <div class="atas">
+            <img src="img/logo_pixsphere.png" alt="" class="logo-pixsphere">
+            <div class="link">
+                <ul>
+                    <li>For designers</li>
+                    <li>Hire talent</li>
+                    <li>Inspriration</li>
+                    <li>Advertising</li>
+                    <li>Blog</li>
+                    <li>About</li>
+                    <li>Careers</li>
+                    <li>Support</li>
+                </ul>
+            </div>
+            <img src="img/Rectangle 122.png" alt="" class="logo-sosmed">
+        </div>
+        <div class="bawahh">
+            <div class="linkk">
+                <ul>
+                    <li>@2024 pixsphere</li>
+                    <li>Terms</li>
+                    <li>Privacy</li>
+                    <li>Cookies</li>
+                </ul>
+            </div>
+            <div class="linkk">
+                <ul>
+                    <li>Job</li>
+                    <li>Designers</li>
+                    <li>Tag</li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

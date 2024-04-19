@@ -34,9 +34,15 @@
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="/home">Home</a>
                     </li>
+                    @if (Auth::user()->role === 'admin')
+                    <li class="nav-item">
+                        <a class="nav-link" href="/report">Report</a>
+                    </li>
+                    @else
                     <li class="nav-item">
                         <a class="nav-link" href="/albums">Create</a>
                     </li>
+                    @endif
                 </ul>
                 <div class="dropdown" style="display: flex;align-items: center;gap: 8px;">
                     <button class="btn btn-white dropdown-toggle" type="button" data-bs-toggle="dropdown"
@@ -100,10 +106,10 @@
                 onmouseout="this.style.backgroundColor='#9AB2DB';this.style.color='#ffff';">Edit Profile</a>
             @endif
 
-            <a href="" class="btn btn rounded-pill fw-semibold" type="submit"
+            <!-- <a href="" class="btn btn rounded-pill fw-semibold" type="submit"
                 style="background-color: #F9F9F9; color: #1A1A1A; border: 2px solid #6C7195;"
                 onmouseover="this.style.backgroundColor='#F0F3F6';"
-                onmouseout="this.style.backgroundColor='#F9F9F9';this.style.color='#1A1A1A';">Deleted</a>
+                onmouseout="this.style.backgroundColor='#F9F9F9';this.style.color='#1A1A1A';">Deleted</a> -->
         </div>
         <br>
         <div class="buttonn">

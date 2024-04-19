@@ -21,7 +21,7 @@
     <nav class="navbar navbar-expand-lg"
         style="background-color: #F6F8FB;padding: 0px 30px;border:1px solid #ECECEC ; box-shadow: 0 4px 8px rgba(220, 220, 220, 0.25);">
         <div class="container-fluid">
-            <img src="img/logo_pixsphere.png" alt="Pixsphere" class="navbar-brand" width="128px">
+            <img src="{{ asset('img/logo_pixsphere.png') }}" alt="Pixsphere" class="navbar-brand" width="128px">
             <a class="navbar-brand" href="#"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
                 aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,9 +33,15 @@
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="/home">Home</a>
                     </li>
+                    @if (Auth::user()->role === 'admin')
                     <li class="nav-item">
-                        <a class="nav-link active" href="/albums">Create</a>
+                        <a class="nav-link" href="/report">Report</a>
                     </li>
+                    @else
+                    <li class="nav-item">
+                        <a class="nav-link" href="/albums">Create</a>
+                    </li>
+                    @endif
                 </ul>
                 @auth
                 <div class="dropdown" style="display: flex;align-items: center;gap: 8px;">
@@ -43,8 +49,8 @@
                         aria-expanded="false" style="display: flex;align-items: center;gap: 8px;border: none;">
                         <div class="img-prof"
                             style="display:flex;width:47px;height: 47px;border-radius: 50%;padding: 4px;border: 1px solid #332C54;justify-content: center;align-items: center;">
-                            <img src="profile_images/{{ auth()->user()->photo_profil}}" alt=""
-                                style="width: 40px;height: 40px;border-radius: 50%;">
+                            <img src="{{ asset('profile_images/' . auth()->user()->photo_profil) }}" alt=""
+                                style="width: 40px; height: 40px; border-radius: 50%;">
                         </div>
                         <p style="margin-top: 14px;cursor: pointer;">{{ auth()->user()->username}}</p>
                     </button>
@@ -83,13 +89,13 @@
                 </div><br>
                 <div class="form-group">
                     <label for="image" class="custom-file-upload">Upload an Image</label>
-                    <input type="file" id="image" name="photo" id="imageInput" hidden>
+                    <input type="file" id="image" name="photo" id="imageInput" hidden required>
                 </div>
             </div>
             <div class="input-text">
                 <div class="form-group">
                     <label for="title">Title</label>
-                    <input type="text" id="title" name="title">
+                    <input type="text" id="title" name="title" required>
                 </div>
 
                 <div class="form-group">
@@ -98,6 +104,7 @@
                 </div>
 
                 <br>
+                @if (!$albums->isEmpty())
                 <div class="form-group">
                     <label>Add to Album (optional):</label>
                     <div>
@@ -112,6 +119,8 @@
                         @endforeach
                     </div>
                 </div>
+                @endif
+
 
 
                 <div class="button">
@@ -123,7 +132,8 @@
                     <button class="btn btn rounded-pill fw-semibold" type="button"
                         style="background-color: #F9F9F9; color: #1A1A1A; border: 2px solid #6C7195;"
                         onmouseover="this.style.backgroundColor='#F0F3F6';"
-                        onmouseout="this.style.backgroundColor='#F9F9F9';this.style.color='#1A1A1A';">Cancel</button>
+                        onmouseout="this.style.backgroundColor='#F9F9F9';this.style.color='#1A1A1A';"><a
+                            href="/photos-create" style="color: #1A1A1A;text-decoration:none;">Cancel</a></button>
                 </div>
             </div>
         </form>

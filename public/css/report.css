@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+*{
+    font-family: 'Poppins', sans-serif;
+}
+.navbar {
+    font-family: 'Poppins', sans-serif;
+}
+.main {
+    font-family: 'Poppins', sans-serif;
+    padding: 50px;
+}
+
+.atass{
+    padding: 20px 50px;
+    display: flex;
+    flex-direction: column;
+}
+.atass p{
+    margin-top: 10px;
+    font-size: 13px;
+}
+.chartCard {
+    margin-bottom: 40px;
+    height: calc(70vh - 40px);
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chartBox {
+    width: 93%;
+    padding: 20px;
+    border-radius: 20px;
+    border: solid 1px #F1F2F4;
+    background: #fffefe;
+}
+.table{
+    padding: 0px 80px;
+}
+.main-table{
+    padding: 20px;
+    border-radius: 20px;
+    border: solid 1px #F1F2F4;
+    background: #fffefe;
+}
+.footer{
+    font-family: 'Poppins', sans-serif;
+    background-color: #ffff;
+    border-top: 1px solid #f1f1f1;
+    margin-top: 60px;
+    padding: 30px 50px;
+}
+.footer .atas{
+    display: flex;
+    justify-content: space-between;
+}
+.footer .atas .logo-pixsphere{
+    width: 140px;
+}
+.footer .atas .link ul{
+    margin-left: -13px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    list-style-type: none;
+    color: #2D2C41;
+}
+.footer .atas .link ul li{
+    margin-top: 30px;
+    font-size: 13px;
+    font-weight: 550;
+}
+.footer .atas .logo-sosmed{
+    margin-top: 20px;
+    height: 25px;
+}
+.footer .bawahh{
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+}
+.footer .bawahh .linkk ul{
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 25px;
+    list-style-type: none;
+    color: #5f5f5f;
+}
+.footer .bawahh .linkk ul li{
+    margin-top: 25px;
+    margin-bottom: 5px;
+    font-size: 12px;
+}
+
+.hr{
+    padding: 0px 60px;
+    height: 2px;
+}
+.button{
+    padding: 0px 60px;
+    margin-top: 40px;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    font-size: 13px;
+}
+.button button{
+    border: none;
+    background: transparent;
+}
+.btn-active{
+    padding: 5px 10px;
+    background-color: #D9D9D9;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+

@@ -32,9 +32,15 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="/home">Home</a>
                     </li>
+                    @if (Auth::user()->role === 'admin')
+                    <li class="nav-item">
+                        <a class="nav-link" href="/report">Report</a>
+                    </li>
+                    @else
                     <li class="nav-item">
                         <a class="nav-link" href="/albums">Create</a>
                     </li>
+                    @endif
                 </ul>
                 @auth
                 <div class="dropdown" style="display: flex;align-items: center;gap: 8px;">

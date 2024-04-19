@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Album;
 use App\Models\Like;
 use App\Models\Photo;
+use App\Models\Ms_Users;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -101,6 +102,32 @@ class PhotoController extends Controller
         Alert::success('Success', 'Photo deleted successfully!');
 
         return redirect()->back();
+    }
+
+    public function edit($id)
+    {
+        $photo = Photo::findOrFail($id);
+        return view('photo-edit', compact('photo'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $photo = Photo::findOrFail($id);
+
+        $validator = Validator::make($request->all(), [
+            'title' => 'nullable|string',
+            'description' => 'nullable|string',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $photo->title = $request->input('title');
+        $photo->description = $request->input('description');
+        $photo->save();
+
+        return redirect()->route('albums'); 
     }
 
 }

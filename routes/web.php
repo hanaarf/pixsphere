@@ -42,6 +42,8 @@ Route::post('/photos/upload', [PhotoController::class, 'upload'])->name('photos.
 Route::post('/photos/addToAlbum', [PhotoController::class, 'addToAlbum'])->name('photos.addtoalbum');
 Route::get('/photos/{id}', [PhotoController::class, 'detailFoto'])->name('photo.detail');
 Route::get('/photos/delete/{id}', [PhotoController::class, 'delete'])->name('photos.delete');
+Route::get('/edit/{id}', [PhotoController::class, 'edit'])->name('photos.edit');
+Route::put('/update/{id}', [PhotoController::class, 'update'])->name('photos.update');
 
 
 Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
@@ -59,3 +61,6 @@ Route::get('/report', function () {
         return redirect()->route('home')->with('error', 'Unauthorized Access');
     }
 })->name('report');
+
+Route::get('/exportalbum', [AdminController::class, 'exportalbum'])->name('exportalbum');
+Route::get('/exportimage', [AdminController::class, 'exportimage'])->name('exportimage');

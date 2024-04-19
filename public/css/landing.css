@@ -1,4 +1,3 @@
-
 @import url("https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap");
 
 * {
@@ -17,6 +16,7 @@ nav {
   padding: 0px 50px;
   margin-bottom: 25px;
 }
+
 nav a {
   margin-top: 15px;
   text-decoration: none;
@@ -24,7 +24,6 @@ nav a {
   width: 120px;
   height: 42px;
   font-weight: 500;
-  color: #272727;
   border-radius: 25px;
   border: 3px solid #9AB2DB;
   display: flex;
@@ -71,6 +70,114 @@ nav a {
   animation: slidein 7s infinite;
 }
 
+.explore-image{
+  padding: 20px 60px;
+  margin-top: 100px;
+}
+.explore-image h2{
+  font-size: 37px;
+  color: #272240;
+}
+.explore-image h2 span{
+  font-style: italic;
+  color: #9AB2DB;
+}
+.explore-image P{
+  width: 400px;
+  font-size: 19px;
+  margin-top: 20px;
+}
+.tekss{
+  display: flex;
+  justify-content: left;
+}
+.explore-image .image{
+  display: flex;
+  justify-content: space-between;
+}
+.explore-image .image img{
+  margin-top: 30px;
+  width: 330px;
+}
+.start{
+  padding: 20px 60px;
+  margin-top: 130px;
+}
+.start .wrap{
+  display: flex;
+  justify-content: space-between;
+}
+.start .wrap .today{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.start .wrap .today h2{
+  margin-top: 60px;
+  font-size: 38px;
+  color: #272240;
+}
+.start .wrap .today p{
+  width: 330px;
+  font-size: 19px;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.start .wrap .today .hr{
+  margin-top: 10px;
+  background-color: #C0D3F7;
+  width:160px ;
+  height: 2px;
+}
+.start .wrap .today .btn{
+  cursor: pointer;
+  font-size: 15px;
+  background-color: transparent;
+  border: 2px solid #9AB2DB;
+  border-radius: 20px;
+  padding: 8px 10px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+.start .wrap .today .btn .material-symbols-outlined{
+  font-size: 17px;
+  color: white;
+  padding: 3px;
+  background-color:#C0D3F7 ;
+  border-radius: 50%;
+  transform: rotate(-45deg);
+}
+.start .wrap .img img{
+  width: 400px;
+}
+.features{
+  padding: 20px 60px;
+  margin-top: 100px;
+}
+.features h2{
+  width: 300px;
+  font-size: 37px;
+  color: #272240;
+}
+.features h2 span{
+  font-style: italic;
+  color: #9AB2DB;
+}
+.tekss{
+  display: flex;
+  justify-content: left;
+}
+.features .image{
+  display: flex;
+  justify-content: space-between;
+}
+.features .image img{
+  margin-top: 30px;
+  width: 330px;
+}
 @keyframes showup {
   0% {
     opacity: 0;
@@ -260,4 +367,54 @@ h1 {
 .slider-img.active .details p,
 .slider-img.active .details h2 {
   display: block;
+}
+.footer{
+  font-family: 'Poppins', sans-serif;
+  background-color: #F3F7FE;
+  margin-top: 40px;
+  border-top: 1px solid #f1f1f1;
+  padding: 30px 50px;
+}
+.footer .atas{
+  display: flex;
+  justify-content: space-between;
+}
+.footer .atas .logo-pixsphere{
+  width: 140px;
+}
+.footer .atas .link ul{
+  margin-left: -13px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  list-style-type: none;
+  color: #2D2C41;
+}
+.footer .atas .link ul li{
+  margin-top: 30px;
+  font-size: 13px;
+  font-weight: 550;
+}
+.footer .atas .logo-sosmed{
+  margin-top: 20px;
+  height: 25px;
+}
+.footer .bawahh{
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+}
+.footer .bawahh .linkk ul{
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 25px;
+  list-style-type: none;
+  color: #5f5f5f;
+}
+.footer .bawahh .linkk ul li{
+  margin-top: 25px;
+  margin-bottom: 5px;
+  font-size: 12px;
 }

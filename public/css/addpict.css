@@ -25,15 +25,17 @@ body {
     color: #9E9EA7;
 }
 
-.info{
+.info {
     margin-top: 20px;
     font-size: 12px;
     color: #6E6D7A;
 }
-.tanggal{
+
+.tanggal {
     margin-top: -10px;
     color: #6E6D7A;
 }
+
 .styled-div {
     width: 80px;
     height: 35px;
@@ -45,18 +47,21 @@ body {
     align-items: center;
     cursor: pointer;
 }
-.styled-div p{
+
+.styled-div p {
     margin-top: 14px;
     font-size: 20px;
     font-weight: 500;
 }
+
 .wrapper {
     margin-top: 40px;
     display: flex;
     gap: 50px;
     flex-wrap: wrap;
 }
-.pictalbum{
+
+.pictalbum {
     width: 350px;
     height: 250px;
     background-color: #F7F7F7;
@@ -67,7 +72,8 @@ body {
     justify-content: center;
     align-items: center;
 }
-.pictalbum img{
+
+.pictalbum img {
     border: 1px solid rgb(231, 228, 228);
     border-radius: 17px;
     max-width: 100%;
@@ -116,35 +122,37 @@ body {
     visibility: visible;
 }
 
-.atas{
+.atas {
     display: flex;
     gap: 5px;
     align-items: center;
     margin-bottom: 5px;
 }
-.atas img{
+
+.atas img {
     width: 40px;
     height: 40px;
     border-radius: 50%;
     border: 1px solid rgb(232, 229, 229);
 }
-.atas h5{
+
+.atas h5 {
     margin-top: 7px;
 }
 
 ul {
     list-style-type: none;
-  }
-  
-  li {
+}
+
+li {
     display: inline-block;
-  }
-  
-  input[type="checkbox"][id^="cb"] {
+}
+
+input[type="checkbox"][id^="cb"] {
     display: none;
-  }
-  
-  label {
+}
+
+label {
     border: 1px solid #fff;
     padding: 10px;
     display: block;
@@ -157,9 +165,9 @@ ul {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-  }
-  
-  label::before {
+}
+
+label::before {
     background-color: white;
     color: white;
     content: " ";
@@ -175,27 +183,36 @@ ul {
     line-height: 28px;
     transition-duration: 0.4s;
     transform: scale(0);
-  }
-  
-  label img {
+}
+
+label img {
     height: 100px;
     width: 100px;
     transition-duration: 0.2s;
     transform-origin: 50% 50%;
-  }
-  
-  :checked+label {
+}
+
+:checked+label {
     border-color: #ddd;
-  }
-  
-  :checked+label::before {
+}
+
+:checked+label::before {
     content: "✓";
     background-color: grey;
     transform: scale(1);
-  }
-  
-  :checked+label img {
+}
+
+:checked+label img {
     transform: scale(0.9);
     box-shadow: 0 0 5px #333;
     z-index: -1;
-  }
+}
+
+.zoom-effect {
+    transition: transform 0.3s ease;
+}
+
+.zoom-effect:hover {
+    transform: scale(1.05);
+    /* Atur faktor scaling untuk efek zoom */
+}

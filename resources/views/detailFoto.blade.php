@@ -11,6 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <!-- icon -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
@@ -32,9 +33,15 @@
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="/home">Home</a>
                     </li>
+                    @if (Auth::user()->role === 'admin')
+                    <li class="nav-item">
+                        <a class="nav-link" href="/report">Report</a>
+                    </li>
+                    @else
                     <li class="nav-item">
                         <a class="nav-link" href="/albums">Create</a>
                     </li>
+                    @endif
                 </ul>
                 @auth
                 <div class="dropdown" style="display: flex;align-items: center;gap: 8px;">
@@ -78,12 +85,14 @@
     <div class="main">
         <div class="img">
             <div class="name">
-                <div class="img-prof"
-                    style="display:flex;width:47px;height: 47px;border-radius: 50%;padding: 4px;border: 1px solid #332C54;justify-content: center;align-items: center;">
-                    <img src="{{ asset('profile_images/' . $photo->user->photo_profil) }}" alt=""
-                        style="width: 40px;height: 40px;border-radius: 50%;">
+                <div class="foto">
+                    <div class="img-prof"
+                        style="display:flex;width:47px;height: 47px;border-radius: 50%;padding: 4px;border: 1px solid #332C54;justify-content: center;align-items: center;">
+                        <img src="{{ asset('profile_images/' . $photo->user->photo_profil) }}" alt=""
+                            style="width: 40px;height: 40px;border-radius: 50%;">
+                    </div>
+                    <p class="text">{{ $photo->user->username }}</p>
                 </div>
-                <p class="text">{{ $photo->user->username }}</p>
             </div>
             <div class="box-img">
                 <img src="{{ asset('storage/images/' . $photo->photo) }}" alt="" class="pict">
@@ -132,7 +141,7 @@
                 </span>
                 <p class="comment-count">{{ $comments->count() }}</p>
             </div>
-            <p class="text-name"><span>{{ $photo->user->username }} </span>{{ $photo->title }}</p>
+            <p class="text-name"><span>{{ $photo->title }}, </span>{{ $photo->description }}</p>
         </div>
         <div class="vertical-line"></div>
         <div class="komen">
@@ -169,10 +178,32 @@
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const deleteButtons = document.querySelectorAll('.delete-photo');
+
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const photoId = this.getAttribute('data-id');
+
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: 'You won\'t be able to revert this!',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Redirect to delete route
+                            window.location.href = `/photos/delete/${photoId}`;
+                        }
+                    });
+                });
+            });
+        });
+
+    </script>
 </body>
-
-</html>
-
-</body>
-
 </html>
